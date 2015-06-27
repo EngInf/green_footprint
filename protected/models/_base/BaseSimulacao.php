@@ -79,6 +79,21 @@ abstract class BaseSimulacao extends AweActiveRecord {
             'criteria' => $criteria,
         ));
     }
+	
+	public function search_Empresa($parentID) {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id);
+        $criteria->compare('empresa', $parentID);
+        $criteria->compare('data', $this->data, true);
+        $criteria->compare('consumo_total', $this->consumo_total);
+        $criteria->compare('habitantes', $this->habitantes);
+        $criteria->compare('divisoes', $this->divisoes);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
     public function behaviors() {
         return array_merge(array(

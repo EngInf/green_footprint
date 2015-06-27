@@ -15,7 +15,7 @@ if ( !$db ) {
 
 // Fetch the data
 $query = "
-  SELECT consumo_total,media,cae.descricao as descricao 
+   SELECT ROUND((consumo_total/(habitantes*divisoes)),2) AS consumo,media,empresa.nome AS nome
   FROM simulacao,empresa,cliente,cae 
   WHERE empresa.cae = cae.id 
   AND cliente.empresa=empresa.id 
@@ -37,9 +37,9 @@ $prefix = '';
 echo "[\n";
 while ( $row = mysql_fetch_assoc( $result ) ) {
   echo $prefix . " {\n";
-  echo '  "descricao": "' . $row['descricao'] . '",' . "\n";
+  echo '  "nome": "' . $row['nome'] . '",' . "\n";
   echo '  "media": ' . $row['media'] . ',' . "\n";
-  echo '  "consumo_total": ' . $row['consumo_total'] . '' . "\n";
+  echo '  "consumo": ' . $row['consumo'] . '' . "\n";
   echo " }";
   $prefix = ",\n";
 }

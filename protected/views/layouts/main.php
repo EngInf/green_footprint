@@ -68,7 +68,8 @@
                         array('label' => 'Potencias', 'url' => array('/potencia/index')),  
                         array('label' => 'Simulacoes', 'url' => array('/simulacao/index')), 
 						array('label' => 'SimulacoesEquipamentos', 'url' => array('/simulacaoEquipamento/index')),
-						array('label' => 'Resultados', 'url' => array('/resultado/index')), 	
+						array('label' => 'Resultados', 'url' => array('/resultado/index')),
+						array('label' => 'Grafico', 'url' => array('/grafico/index')),
                     ),
                 ));
             }

@@ -22,9 +22,14 @@ class EmpresaController extends RController
 	 */
 	public function actionView($id)
 	{
+		$child_model = new Cliente("search");
+		$child_model2 = new Simulacao("search");
 		$this->render('view', array(
-			'model' => $this->loadModel($id),
-		));
+            'model' => $this->loadModel($id),
+            'child_model' => $child_model,
+			'child_model2' => $child_model2,
+            'parentID' => $id
+        ));
 	}
 
 	/**

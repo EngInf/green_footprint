@@ -16,7 +16,7 @@ $this->menu=array(
 ?>
 
 <fieldset>
-    <legend><?php echo Yii::t('AweCrud.app', 'View') . ' ' . Simulacao::label(); ?> <?php echo CHtml::encode($model) ?></legend>
+     <legend><?php echo Yii::t('AweCrud.app', 'Equipamentos com esta') . ' ' . Simulacao::label(); ?> <?php echo CHtml::encode($model) ?></legend>
 
 <?php $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'simulacao-equipamento-grid',

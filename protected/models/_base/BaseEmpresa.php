@@ -84,6 +84,21 @@ abstract class BaseEmpresa extends AweActiveRecord {
             'criteria' => $criteria,
         ));
     }
+	
+	public function search_Cae($parentID) {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id);
+        $criteria->compare('nome', $this->nome, true);
+        $criteria->compare('latitude', $this->latitude);
+        $criteria->compare('longitude', $this->longitude);
+        $criteria->compare('localidade', $this->localidade, true);
+        $criteria->compare('cae', $parentID);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
     public function behaviors() {
         return array_merge(array(

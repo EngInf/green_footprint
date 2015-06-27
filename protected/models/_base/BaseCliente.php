@@ -70,6 +70,19 @@ abstract class BaseCliente extends AweActiveRecord {
             'criteria' => $criteria,
         ));
     }
+	
+	public function search_Empresa($parentID) {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id);
+        $criteria->compare('nome', $this->nome, true);
+        $criteria->compare('password', $this->password, true);
+        $criteria->compare('empresa', $parentID);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
     public function behaviors() {
         return array_merge(array(

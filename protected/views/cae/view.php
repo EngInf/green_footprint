@@ -16,14 +16,45 @@ $this->menu=array(
 ?>
 
 <fieldset>
-    <legend><?php echo Yii::t('AweCrud.app', 'View') . ' ' . Cae::label(); ?> <?php echo CHtml::encode($model) ?></legend>
+    <legend><?php echo Yii::t('AweCrud.app', 'Empresas com esta') . ' ' . Cae::label(); ?> <?php echo CHtml::encode($model) ?></legend>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
-	'data' => $model,
-	'attributes' => array(
+<?php $this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'empresa-grid',
+    'type' => 'striped condensed',
+    'dataProvider' => $child_model->search_Cae($parentID),
+    'columns' => array(
         'id',
-        'descricao',
-        'media',
-	),
-)); ?>
+		'nome',
+		'latitude',
+		'longitude',
+		'localidade',
+        array(
+            'name' => 'cae',
+            'value' => 'isset($data->cae) ? $data->cae : null',
+            'filter' => CHtml::listData(Cae::model()->findAll(), 'id', Cae::representingColumn()),
+        ),
+        array(
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{create}{view}{update}{delete}',
+            'buttons' => array(
+                'create' => array(
+                    'label' => '+', // text label of the button
+                    'url' => 'Yii::app()->createUrl("empresa/create", array("id"=>$data->id))',
+                ),
+                'view' => array(
+                    'label' => 'r', // text label of the button
+                    'url' => 'Yii::app()->createUrl("empresa/view", array("id"=>$data->id))',
+                ),
+                'update' => array(
+                    'label' => 'u', // text label of the button
+                    'url' => 'Yii::app()->createUrl("empresa/update", array("id"=>$data->id))',
+                ),
+                'delete' => array(
+                    'label' => 'd', // text label of the button
+                    'url' => 'Yii::app()->createUrl("empresa/delete", array("id"=>$data->id))',
+                ),
+            ),
+        ),
+    )
+));?>
 </fieldset>

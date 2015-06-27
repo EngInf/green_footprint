@@ -80,6 +80,21 @@ abstract class BaseEquipamento extends AweActiveRecord {
             'criteria' => $criteria,
         ));
     }
+	
+	public function search_Potencia($parentID) {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id', $this->id);
+        $criteria->compare('nome', $this->nome, true);
+        $criteria->compare('potencia', $parentID);
+        $criteria->compare('horas', $this->horas);
+        $criteria->compare('quantidade', $this->quantidade);
+        $criteria->compare('consumo', $this->consumo);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
     public function behaviors() {
         return array_merge(array(

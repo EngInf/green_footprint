@@ -222,27 +222,33 @@ function func5(selectedValue){
 		}
 		
 		echo "\tSIMULACAO->EMPRESA (Acima da media):<br>\n";
-		$simulacao_empresa = "SELECT consumo_total FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$rep_my_custom_sql' AND empresa.id=cliente.empresa AND consumo_total >= (SELECT media FROM cae WHERE id = $cae_display)";
+		$simulacao_empresa = "SELECT consumo_total,habitantes,divisoes FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$rep_my_custom_sql' AND empresa.id=cliente.empresa AND (consumo_total/(habitantes*divisoes)) >= (SELECT media FROM cae WHERE id = $cae_display)";
 		$result_simulacao_empresa = mysqli_query($db_connection, $simulacao_empresa);
 		
 		while ($row = mysqli_fetch_array($result_simulacao_empresa))
 		{
-			$rep = $row ['consumo_total'];
-			$percent=(($rep/$media)*100)-100;
+			$rep1 = $row ['consumo_total'];
+			$rep2 = $row ['habitantes'];
+			$rep3 = $row ['divisoes'];
+			$average=round(($rep1/($rep2*$rep3)),2);
+			$percent=round((((($rep/($rep2*$rep3))/$media)*100)-100),2);
 			
-			echo"\t<div id='upper_ng' style=font-size:x-large>$rep <-> $percent%</div><img src='./images/ng.jpg' style=width:128px;height:128px;></img> <br>\n";
+			echo"\t<div id='upper_ng' style=font-size:x-large>$average gramas de C02 <-> $percent%</div><img src='./images/ng.gif' style=width:256px;height:128px;></img> <br>\n";
 			
 		}
 		
 		echo "\tSIMULACAO->EMPRESA (Abaixo da media):<br>\n";
-		$simulacao_empresa3 = "SELECT consumo_total FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$rep_my_custom_sql' AND empresa.id=cliente.empresa AND consumo_total < (SELECT media FROM cae WHERE id = $cae_display)";
+		$simulacao_empresa3 = "SELECT consumo_total,habitantes,divisoes FROM simulacao,empresa,cliente,cae WHERE empresa.cae = cae.id AND cliente.empresa=empresa.id AND cae.id=$cae_display AND simulacao.empresa=$empresa_display AND simulacao.empresa=empresa.id AND cliente.nome='$rep_my_custom_sql' AND empresa.id=cliente.empresa AND (consumo_total/(habitantes*divisoes)) < (SELECT media FROM cae WHERE id = $cae_display)";
 		$result_simulacao_empresa3 = mysqli_query($db_connection, $simulacao_empresa3);
 		
 		while ($row3 = mysqli_fetch_array($result_simulacao_empresa3))
 		{
 			$rep3 = $row3 ['consumo_total'];
-			$percent=(($rep3/$media)*100)-100;
-			echo"\t<div id='lower_ok' style=font-size:x-large>$rep <-> $percent%</div><img src='./images/ok.jpg' style=width:128px;height:128px;></img> <br>\n";
+			$rep1 = $row3 ['habitantes'];
+			$rep2 = $row3 ['divisoes'];
+			$average=round(($rep3/($rep2*$rep1)),2);
+			$percent=round((((($rep3/($rep2*$rep1))/$media)*100)-100),2);
+			echo"\t<div id='lower_ok' style=font-size:x-large>$average gramas de C02 <-> $percent%</div><img src='./images/ok.gif' style=width:256px;height:128px;></img> <br>\n";
 			
 		}
 		

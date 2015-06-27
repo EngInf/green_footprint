@@ -49,50 +49,67 @@ AmCharts.loadJSON = function(url) {
   <!-- chart container -->
   <div id="chartdiv" style="width: 600px; height: 300px;"></div>
 
-  <!-- the chart code -->
   <script>
-var chart;
-
-// create chart
-AmCharts.ready(function() {
-
-  // load the data
   var chartData = AmCharts.loadJSON('./chart/data.php');
-
-  // SERIAL CHART
-  chart = new AmCharts.AmSerialChart();
-  chart.pathToImages = "http://www.amcharts.com/lib/images/";
-  chart.dataProvider = chartData;
-  chart.categoryField = "descricao";
-
-  // GRAPHS
-
-  var graph1 = new AmCharts.AmGraph();
-  graph1.valueField = "media";
-  graph1.bullet = "round";
-  graph1.bulletBorderColor = "#FFFFFF";
-  graph1.bulletBorderThickness = 2;
-  graph1.lineThickness = 2;
-  graph1.lineAlpha = 0.5;
-  chart.addGraph(graph1);
   
-  var graph2 = new AmCharts.AmGraph();
-  graph2.valueField = "consumo_total";
-  graph2.bullet = "round";
-  graph2.bulletBorderColor = "#FFFFFF";
-  graph2.bulletBorderThickness = 2;
-  graph2.lineThickness = 2;
-  graph2.lineAlpha = 0.5;
-  chart.addGraph(graph2);
+  var chart = AmCharts.makeChart("chartdiv", {
+  "type": "serial",
+  "addClassNames": true,
+  "theme": "light",
+  "autoMargins": false,
+  "marginLeft": 75,
+  "marginRight": 8,
+  "marginTop": 10,
+  "marginBottom": 26,
+  "balloon": {
+    "adjustBorderColor": false,
+    "horizontalPadding": 10,
+    "verticalPadding": 8,
+    "color": "#ffffff"
+  },
 
-  // CATEGORY AXIS
-  chart.categoryAxis.parseDates = false;
-
-  // WRITE
-  chart.write("chartdiv");
+  "dataProvider": chartData,
+  "valueAxes": [{
+    "axisAlpha": 0,
+    "position": "left"
+  }],
+  "startDuration": 1,
+  "graphs": [{
+    "alphaField": "alpha",
+    "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
+    "fillAlphas": 1,
+    "title": "Media do Consumo Total",
+    "type": "column",
+    "valueField": "consumo",
+    "dashLengthField": "dashLengthColumn"
+  }, {
+    "id": "graph2",
+    "balloonText": "<span style='font-size:12px;'>[[title]] in [[category]]:<br><span style='font-size:20px;'>[[value]]</span> [[additional]]</span>",
+    "bullet": "round",
+    "lineThickness": 3,
+    "bulletSize": 7,
+    "bulletBorderAlpha": 1,
+    "bulletColor": "#FFFFFF",
+    "useLineColorForBulletBorder": true,
+    "bulletBorderThickness": 3,
+    "fillAlphas": 0,
+    "lineAlpha": 1,
+    "title": "Media por tipo de empresa",
+    "valueField": "media"
+  }],
+  "categoryField": "nome",
+  "categoryAxis": {
+    "gridPosition": "start",
+    "axisAlpha": 0,
+    "tickLength": 0
+  },
+  "export": {
+    "enabled": true
+  }
 });
-
   </script>
+  
+  
 
 </body>
 </html>

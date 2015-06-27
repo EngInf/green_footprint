@@ -16,21 +16,83 @@ $this->menu=array(
 ?>
 
 <fieldset>
-    <legend><?php echo Yii::t('AweCrud.app', 'View') . ' ' . Empresa::label(); ?> <?php echo CHtml::encode($model) ?></legend>
+   <legend><?php echo Yii::t('AweCrud.app', 'Clientes e Simulacoes com esta') . ' ' . Empresa::label(); ?> <?php echo CHtml::encode($model) ?></legend>
 
-<?php $this->widget('bootstrap.widgets.TbDetailView',array(
-	'data' => $model,
-	'attributes' => array(
+<?php $this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'cliente-grid',
+    'type' => 'striped condensed',
+    'dataProvider' => $child_model->search_Empresa($parentID),
+    'columns' => array(
         'id',
         'nome',
-        'latitude',
-        'longitude',
-        'localidade',
+        'password',
         array(
-			'name'=>'cae',
-			'value'=>($model->cae0 !== null) ? CHtml::link($model->cae0, array('/cae/view', 'id' => $model->cae0->id)).' ' : null,
-			'type'=>'html',
-		),
-	),
+            'name' => 'empresa',
+            'value' => 'isset($data->empresa) ? $data->empresa : null',
+            'filter' => CHtml::listData(Empresa::model()->findAll(), 'id', Empresa::representingColumn()),
+        ),
+        array(
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{create}{view}{update}{delete}',
+            'buttons' => array(
+                'create' => array(
+                    'label' => '+', // text label of the button
+                    'url' => 'Yii::app()->createUrl("cliente/create", array("id"=>$data->id))',
+                ),
+                'view' => array(
+                    'label' => 'r', // text label of the button
+                    'url' => 'Yii::app()->createUrl("cliente/view", array("id"=>$data->id))',
+                ),
+                'update' => array(
+                    'label' => 'u', // text label of the button
+                    'url' => 'Yii::app()->createUrl("cliente/update", array("id"=>$data->id))',
+                ),
+                'delete' => array(
+                    'label' => 'd', // text label of the button
+                    'url' => 'Yii::app()->createUrl("cliente/delete", array("id"=>$data->id))',
+                ),
+            ),
+        ),
+    )
+));
+
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'simulacao-grid',
+    'type' => 'striped condensed',
+    'dataProvider' => $child_model2->search_Empresa($parentID),
+    'columns' => array(
+        'id',
+		'data',
+        'consumo_total',
+        'habitantes',
+        'divisoes',
+        array(
+            'name' => 'empresa',
+            'value' => 'isset($data->empresa) ? $data->empresa : null',
+            'filter' => CHtml::listData(Empresa::model()->findAll(), 'id', Empresa::representingColumn()),
+        ),
+        array(
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{create}{view}{update}{delete}',
+            'buttons' => array(
+                'create' => array(
+                    'label' => '+', // text label of the button
+                    'url' => 'Yii::app()->createUrl("simulacao/create", array("id"=>$data->id))',
+                ),
+                'view' => array(
+                    'label' => 'r', // text label of the button
+                    'url' => 'Yii::app()->createUrl("simulacao/view", array("id"=>$data->id))',
+                ),
+                'update' => array(
+                    'label' => 'u', // text label of the button
+                    'url' => 'Yii::app()->createUrl("simulacao/update", array("id"=>$data->id))',
+                ),
+                'delete' => array(
+                    'label' => 'd', // text label of the button
+                    'url' => 'Yii::app()->createUrl("simulacao/delete", array("id"=>$data->id))',
+                ),
+            ),
+        ),
+    )
 )); ?>
 </fieldset>
