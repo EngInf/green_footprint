@@ -231,7 +231,7 @@ function func5(selectedValue){
 			$rep2 = $row ['habitantes'];
 			$rep3 = $row ['divisoes'];
 			$average=round(($rep1/($rep2*$rep3)),2);
-			$percent=round((((($rep/($rep2*$rep3))/$media)*100)-100),2);
+			$percent=round((((($rep1/($rep2*$rep3))/$media)*100)-100),2);
 			
 			echo"\t<div id='upper_ng' style=font-size:x-large>$average gramas de C02 <-> $percent%</div><img src='./images/ng.gif' style=width:256px;height:128px;></img> <br>\n";
 			
